@@ -80,8 +80,8 @@ const CLINIC_DATA = {
   heroVideo: "https://i.imgur.com/62VWdXy.mp4",
   aboutImage: "https://i.imgur.com/NRte7M8.jpg",
   gallery: [
-    { url: "https://i.imgur.com/moiaTLk.mp4", type: "video" },
-    { url: "https://i.imgur.com/62VWdXy.mp4", type: "video" },
+    { url: "https://i.imgur.com/moiaTLk.jpg", type: "image" },
+    { url: "https://i.imgur.com/62VWdXy.jpg", type: "image" },
     { url: "https://i.imgur.com/PH3BDh1.jpg", type: "image" },
     { url: "https://i.imgur.com/F9wIoUE.jpg", type: "image" },
     { url: "https://i.imgur.com/QSZ6i8Z.jpg", type: "image" },
@@ -109,44 +109,23 @@ const CLINIC_DATA = {
 };
 
 const SmoothMedia = ({ item, index }: { item: any, index: number }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: index * 0.05 }}
-      className="break-inside-avoid rounded-[32px] overflow-hidden group relative bg-brand-cream/20 mb-8"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.05 }}
+      className="break-inside-avoid rounded-[32px] overflow-hidden group relative bg-brand-cream/10 mb-8 shadow-lg"
     >
-      {item.type === 'video' ? (
-        <div className="relative aspect-video lg:aspect-auto">
-          <video
-            src={item.url}
-            poster={item.url.replace('.mp4', '.jpg')}
-            autoPlay
-            muted
-            loop
-            playsInline
-            onLoadedData={() => setIsLoaded(true)}
-            className={`w-full h-auto transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-          />
-          {!isLoaded && <div className="absolute inset-0 bg-brand-cream/10 animate-pulse" />}
-          <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-transparent transition-colors duration-700" />
-        </div>
-      ) : (
-        <div className="relative overflow-hidden">
-          <img
-            src={item.url}
-            alt={`Galeria ${index + 1}`}
-            referrerPolicy="no-referrer"
-            onLoad={() => setIsLoaded(true)}
-            className={`w-full h-auto group-hover:scale-105 transition-all duration-1000 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-110'}`}
-          />
-          {!isLoaded && <div className="absolute inset-0 bg-brand-cream/10 animate-pulse" />}
-          <div className="absolute inset-0 bg-brand-dark/5 group-hover:bg-transparent transition-colors duration-700" />
-        </div>
-      )}
+      <div className="relative overflow-hidden">
+        <img
+          src={item.url}
+          alt={`Galeria ${index + 1}`}
+          referrerPolicy="no-referrer"
+          className="w-full h-auto group-hover:scale-105 transition-transform duration-700"
+        />
+        <div className="absolute inset-0 bg-brand-dark/5 group-hover:bg-transparent transition-colors duration-500" />
+      </div>
       <div className="absolute top-6 left-6 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
         <span className="text-[10px] font-bold text-white">{index + 1}</span>
       </div>
@@ -237,8 +216,13 @@ const Hero = () => {
           transition={{ duration: 1.5, ease: "easeInOut" }}
           className="w-px bg-brand-gold/30"
         />
-        <a href={`https://instagram.com/${CLINIC_DATA.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="vertical-text text-[10px] uppercase tracking-[0.5em] text-brand-gold hover:text-brand-dark transition-colors duration-500">
-          Instagram
+        <a 
+          href={`https://instagram.com/${CLINIC_DATA.instagram.replace('@', '')}`} 
+          target="_blank" 
+          rel="noreferrer" 
+          className="w-10 h-10 rounded-full border border-brand-gold flex items-center justify-center text-brand-gold hover:bg-brand-gold hover:text-brand-dark transition-all duration-500"
+        >
+          <Instagram size={18} />
         </a>
         <motion.div 
           initial={{ height: 0 }}
@@ -249,14 +233,20 @@ const Hero = () => {
       </div>
 
       <div className="absolute inset-0 z-0">
+        <img 
+          src={CLINIC_DATA.heroImage} 
+          className="w-full h-full object-cover opacity-60 scale-105"
+          alt="Hero Background"
+        />
         <video 
           src={CLINIC_DATA.heroVideo} 
-          poster={CLINIC_DATA.heroImage}
           autoPlay 
           muted 
           loop 
           playsInline 
-          className="w-full h-full object-cover opacity-60 scale-105"
+          className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105"
+          onCanPlay={(e) => e.currentTarget.style.opacity = "0.6"}
+          onError={(e) => e.currentTarget.style.display = "none"}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-brand-cream/40 via-transparent to-brand-cream" />
         <div className="absolute inset-0 bg-brand-dark/5" />
@@ -313,15 +303,24 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1, duration: 1 }}
-              className="flex flex-col sm:flex-row items-start sm:items-center space-y-6 sm:space-y-0 sm:space-x-12"
+              className="flex flex-col sm:flex-row items-start sm:items-center space-y-6 sm:space-y-0 sm:space-x-8"
             >
-              <p className="text-sm text-brand-dark/70 leading-relaxed font-medium max-w-xs uppercase tracking-wider">
-                Protocolos exclusivos desenhados para realçar sua identidade única.
-              </p>
               <button className="group relative overflow-hidden bg-brand-dark text-brand-cream px-12 py-6 rounded-full uppercase tracking-[0.3em] text-[10px] font-bold transition-all duration-700 hover:pr-16">
                 <span className="relative z-10">Iniciar Jornada</span>
                 <ChevronRight className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-500" size={16} />
               </button>
+              
+              <a 
+                href={`https://instagram.com/${CLINIC_DATA.instagram.replace('@', '')}`} 
+                target="_blank" 
+                rel="noreferrer"
+                className="flex items-center space-x-4 group"
+              >
+                <div className="w-12 h-12 rounded-full border border-brand-gold flex items-center justify-center text-brand-gold group-hover:bg-brand-gold group-hover:text-brand-dark transition-all duration-500">
+                  <Instagram size={20} />
+                </div>
+                <span className="text-[10px] uppercase tracking-[0.3em] text-brand-dark font-bold">Ver no Instagram</span>
+              </a>
             </motion.div>
           </motion.div>
         </div>
@@ -393,14 +392,11 @@ const FeaturedVideo = () => {
           >
             <div className="absolute -inset-4 border border-brand-gold/20 rounded-[40px] -z-10" />
             <div className="relative aspect-[16/10] rounded-[32px] overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.5)] bg-brand-dark">
-              <video
-                src="https://i.imgur.com/moiaTLk.mp4"
-                poster="https://i.imgur.com/moiaTLk.jpg"
-                autoPlay
-                muted
-                loop
-                playsInline
+              <img
+                src="https://i.imgur.com/moiaTLk.jpg"
+                alt="Excelência em Estética"
                 className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-brand-dark/20" />
             </div>
