@@ -81,7 +81,7 @@ const CLINIC_DATA = {
   aboutImage: "https://i.imgur.com/NRte7M8.jpg",
   gallery: [
     { url: "https://i.imgur.com/moiaTLk.jpg", type: "image" },
-    { url: "https://i.imgur.com/62VWdXy.jpg", type: "image" },
+    { url: "https://i.imgur.com/ACHgfFD.jpg", type: "image" },
     { url: "https://i.imgur.com/PH3BDh1.jpg", type: "image" },
     { url: "https://i.imgur.com/F9wIoUE.jpg", type: "image" },
     { url: "https://i.imgur.com/QSZ6i8Z.jpg", type: "image" },
@@ -92,7 +92,6 @@ const CLINIC_DATA = {
     { url: "https://i.imgur.com/P1TQZB2.jpg", type: "image" },
     { url: "https://i.imgur.com/ZBcpZk3.jpg", type: "image" },
     { url: "https://i.imgur.com/AmRYFyd.jpg", type: "image" },
-    { url: "https://i.imgur.com/ACHgfFD.jpg", type: "image" },
     { url: "https://i.imgur.com/TmMcgeM.jpg", type: "image" },
     { url: "https://i.imgur.com/2ZChJZ6.jpg", type: "image" },
     { url: "https://i.imgur.com/eswd1b4.jpg", type: "image" },
@@ -233,20 +232,14 @@ const Hero = () => {
       </div>
 
       <div className="absolute inset-0 z-0">
-        <img 
-          src={CLINIC_DATA.heroImage} 
-          className="w-full h-full object-cover opacity-60 scale-105"
-          alt="Hero Background"
-        />
         <video 
           src={CLINIC_DATA.heroVideo} 
+          poster={CLINIC_DATA.heroImage}
           autoPlay 
           muted 
           loop 
           playsInline 
-          className="absolute inset-0 w-full h-full object-cover opacity-60 scale-105"
-          onCanPlay={(e) => e.currentTarget.style.opacity = "0.6"}
-          onError={(e) => e.currentTarget.style.display = "none"}
+          className="w-full h-full object-cover opacity-60 scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-brand-cream/40 via-transparent to-brand-cream" />
         <div className="absolute inset-0 bg-brand-dark/5" />
