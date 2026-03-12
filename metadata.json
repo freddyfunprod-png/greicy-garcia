@@ -1,0 +1,7 @@
+{
+  "name": "Clínica Greicy Garcia",
+  "description": "Landing page de alto padrão para a Clínica Estética Greicy Garcia, focada em tratamentos estéticos de luxo e bem-estar.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
